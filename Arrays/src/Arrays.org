@@ -1,6 +1,6 @@
 #+title: Arrays
 
-* Pick peaks
+* Pick peaks :5kyu:
 
 In this kata, you will write a function that returns the positions and the values of the "peaks" (or local maxima) of a numeric array.
 
