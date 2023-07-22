@@ -1,0 +1,55 @@
+#+title: Mean Without Outliers
+
+#+begin_src jupyter-python
+def clean_mean(sample, cutoff):
+    mean = sum(sample) / len(sample)
+    dev = ((1/len(sample))*sum((num-mean)**2 for num in sample))**(1/2)
+    cleaned = [num for num in sample if abs(num-mean) <= cutoff*dev]
+    if sample == cleaned:
+        return round(mean, 2)
+    else:
+        return clean_mean(sample, cutoff)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src jupyter-python
+clean_mean([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100], 3)
+#+end_src
+
+#+RESULTS:
+:RESULTS:
+# [goto error]
+#+begin_example
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mRecursionError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[2], line 1[0m
+[0;32m----> 1[0m [43mclean_mean[49m[43m([49m[43m[[49m[38;5;241;43m1[39;49m[43m,[49m[43m [49m[38;5;241;43m2[39;49m[43m,[49m[43m [49m[38;5;241;43m3[39;49m[43m,[49m[43m [49m[38;5;241;43m4[39;49m[43m,[49m[43m [49m[38;5;241;43m5[39;49m[43m,[49m[43m [49m[38;5;241;43m6[39;49m[43m,[49m[43m [49m[38;5;241;43m7[39;49m[43m,[49m[43m [49m[38;5;241;43m8[39;49m[43m,[49m[43m [49m[38;5;241;43m9[39;49m[43m,[49m[43m [49m[38;5;241;43m10[39;49m[43m,[49m[43m [49m[38;5;241;43m100[39;49m[43m][49m[43m,[49m[43m [49m[38;5;241;43m3[39;49m[43m)[49m
+
+Cell [0;32mIn[1], line 8[0m, in [0;36mclean_mean[0;34m(sample, cutoff)[0m
+[1;32m      6[0m     [38;5;28;01mreturn[39;00m [38;5;28mround[39m(mean, [38;5;241m2[39m)
+[1;32m      7[0m [38;5;28;01melse[39;00m:
+[0;32m----> 8[0m     [38;5;28;01mreturn[39;00m [43mclean_mean[49m[43m([49m[43msample[49m[43m,[49m[43m [49m[43mcutoff[49m[43m)[49m
+
+Cell [0;32mIn[1], line 8[0m, in [0;36mclean_mean[0;34m(sample, cutoff)[0m
+[1;32m      6[0m     [38;5;28;01mreturn[39;00m [38;5;28mround[39m(mean, [38;5;241m2[39m)
+[1;32m      7[0m [38;5;28;01melse[39;00m:
+[0;32m----> 8[0m     [38;5;28;01mreturn[39;00m [43mclean_mean[49m[43m([49m[43msample[49m[43m,[49m[43m [49m[43mcutoff[49m[43m)[49m
+
+    [0;31m[... skipping similar frames: clean_mean at line 8 (2968 times)][0m
+
+Cell [0;32mIn[1], line 8[0m, in [0;36mclean_mean[0;34m(sample, cutoff)[0m
+[1;32m      6[0m     [38;5;28;01mreturn[39;00m [38;5;28mround[39m(mean, [38;5;241m2[39m)
+[1;32m      7[0m [38;5;28;01melse[39;00m:
+[0;32m----> 8[0m     [38;5;28;01mreturn[39;00m [43mclean_mean[49m[43m([49m[43msample[49m[43m,[49m[43m [49m[43mcutoff[49m[43m)[49m
+
+Cell [0;32mIn[1], line 3[0m, in [0;36mclean_mean[0;34m(sample, cutoff)[0m
+[1;32m      1[0m [38;5;28;01mdef[39;00m [38;5;21mclean_mean[39m(sample, cutoff):
+[1;32m      2[0m     mean [38;5;241m=[39m [38;5;28msum[39m(sample) [38;5;241m/[39m [38;5;28mlen[39m(sample)
+[0;32m----> 3[0m     dev [38;5;241m=[39m (([38;5;241m1[39m[38;5;241m/[39m[38;5;28mlen[39m(sample))[38;5;241m*[39m[38;5;28;43msum[39;49m[43m([49m[43m([49m[43mnum[49m[38;5;241;43m-[39;49m[43mmean[49m[43m)[49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[38;5;241;43m2[39;49m[43m [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mnum[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43msample[49m[43m)[49m)[38;5;241m*[39m[38;5;241m*[39m([38;5;241m1[39m[38;5;241m/[39m[38;5;241m2[39m)
+[1;32m      4[0m     cleaned [38;5;241m=[39m [num [38;5;28;01mfor[39;00m num [38;5;129;01min[39;00m sample [38;5;28;01mif[39;00m [38;5;28mabs[39m(num[38;5;241m-[39mmean) [38;5;241m<[39m[38;5;241m=[39m cutoff[38;5;241m*[39mdev]
+[1;32m      5[0m     [38;5;28;01mif[39;00m sample [38;5;241m==[39m cleaned:
+
+[0;31mRecursionError[0m: maximum recursion depth exceeded
+#+end_example
+:END:
